@@ -4,6 +4,7 @@ import Header from './components/TodoComponents/Header';
 import AddTodo from './components/TodoComponents/AddTodo';
 import './components/TodoComponents/Todo.css';
 
+
 class App extends Component {
   state = {
     todos: [
@@ -49,14 +50,21 @@ class App extends Component {
   delTodo = (id) => {
     this.setState({todos: [...this.state.todos.filter(todo => todo.id !==id)]})
   }
+  // Clear all completed todos at once
+  clearComplete = () => {
+    this.setState({todos: [...this.state.todos.filter(todo => todo.completed !== true)]})
+  }
 
  render() {
     return (
       <div className='App'>
         <div className='container'>
           <Header />
-          <AddTodo addTodo={this.addTodo} />
           <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
+          <AddTodo addTodo={this.addTodo} />
+          <div className='clearComplete'>
+            <button className='btn' onClick={this.clearComplete}>Clear Complete</button>
+          </div>
         </div>
        </div>
     );

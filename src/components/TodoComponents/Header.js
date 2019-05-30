@@ -8,8 +8,8 @@ function Header() {
     )
 }
 const headerStyle = {
-    background: 'lightblue',
-    color: 'yellow',
+    background: 'red',
+    color: 'white',
     textAlign: 'center',
     padding: '10px'
 }
