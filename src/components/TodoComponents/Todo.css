@@ -10,6 +10,7 @@
     padding: 7px 20px;
     cursor: pointer;
 }
+
 .btn:hover {
     background: lightgrey;
 }

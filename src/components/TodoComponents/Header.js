@@ -7,10 +7,12 @@ function Header() {
         </header>
     )
 }
+
 const headerStyle = {
     background: 'red',
     color: 'white',
     textAlign: 'center',
     padding: '10px'
 }
+
 export default Header
