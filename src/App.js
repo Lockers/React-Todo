@@ -26,77 +26,14 @@ class App extends Component {
       todoName: '',
     };
   }
-  changeHandler = (event) => {
-    this.setState({
-      todoName: event.target.value,
-    });
-  }
-
-  addTodo = () => {
-    const newTodo = {
-      id: Date.now(),
-      task: this.state.todoName,
-      completed: true,
-    };
-
-    const newTodoList = this.state.todoList.concat(newTodo);
-
-    this.setState({
-      todoList: newTodoList,
-      todoName: '',
-    });
-  }
-
-  removeComplete = completed => {
-      const completedTasks = this.state.todoList.filter(fr =>  this.state.completed === true);
-      this.setState({
-        todoList: completedTasks,
-      });
-  }
+ 
   render() {
     return (
-      <div>
-        <h3>My Todo:</h3>
-        {
-          this.state.todoList.map(todo => (
-            <div key={todo.id}>
-              {todo.task}
-              <input type='checkbox' onClick='someFunction()' />
-            </div>
-          ))
-        }
-        <TodoAdder
-          todoName={this.state.todoName}
-          changeHandler={this.changeHandler}
-          addTodo={this.addTodo}
-        />
-        <RemoveAllComplete
-          todoName={this.state.todoName}
-          changeHandler={this.changeHandler}
-          removeComplete={this.removeComplete} />
-      </div>
-    );
+     
+    )
   } 
 }
-function TodoAdder({ todoName, changeHandler, addTodo }) {
-  return (
-    <div>
-      <input
-        value={todoName}
-        onChange={changeHandler}
-        type="text"
-      />
-      <button onClick={addTodo}>Add Todo!!</button>
-    </div>
-  );
-}
-function RemoveAllComplete({ todoName, changeHandler, removeComplete }) {
-  return (
-    <div>
-      <button onClick={removeComplete}>Remove Complete</button>
-    </div>
-  );
-}
+
 
 
 export default App;
