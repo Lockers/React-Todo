@@ -32,6 +32,8 @@ class App extends Component {
     ]
   }
 
+  
+
   componentDidMount() {
     this.hydrateStateWithLocalStorage();
 
@@ -108,12 +110,16 @@ class App extends Component {
   clearComplete = () => {
     this.setState({todos: [...this.state.todos.filter(todo => todo.completed !== true)]})
   }
+  search = event => {
+    console.log(event.target.value)
+    this.setState({ todo: [...this.state.todos.filter(todo => event.target.value !== todo.title )]})
+  }
 
  render() {
     return (
       <div className='App'>
         <div className='container'>
-          <Header />
+          <Header search={this.search} />
           <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
           <AddTodo addTodo={this.addTodo} />
           <div className='clearComplete'>
