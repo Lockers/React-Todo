@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-// import { NONAME } from 'dns';
-// import PropTypes from 'prop-types'
 
 export class TodoList extends Component {
     getStyle = () => {
@@ -25,10 +23,7 @@ export class TodoList extends Component {
         )
     }
 }
-//PropTypes
-// TodoList.propTypes = {
-//     todos: PropTypes.object.isRequired
-// }
+
 
 const btnStyle = {
     background: 'red',
