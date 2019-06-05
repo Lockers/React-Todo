@@ -10,19 +10,25 @@ class App extends Component {
     todos: [
       {
         id: 1,
-        title: 'Kill Bob',
+        title: 'Add Search Function',
         completed: false
       },
       {
         id: 2,
-        title: 'Kill Fred',
+        title: 'Upload to Netlify',
         completed: false
       },
       {
         id: 3,
+        title: 'Persist Data',
+        completed: false
+      },
+      {
+        id: 4,
         title: 'Kill Bill',
         completed: false
       },
+
     ]
   }
 
@@ -31,7 +37,7 @@ class App extends Component {
     this.setState({
       todos: this.state.todos.map(todo => {
         if (todo.id === id) {
-        todo.completed =!todo.completed
+        todo.completed = !todo.completed
         }
         return todo
     })})
@@ -48,7 +54,7 @@ class App extends Component {
 
 // Check if deleting correct todo by Id
   delTodo = (id) => {
-    this.setState({todos: [...this.state.todos.filter(todo => todo.id !==id)]})
+    this.setState({todos: [...this.state.todos.filter(todo => todo.id !== id)]})
   }
   // Clear all completed todos at once
   clearComplete = () => {

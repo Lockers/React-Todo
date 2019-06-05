@@ -12,7 +12,6 @@ class AddTodo extends Component {
     }
     onChange = (event) => this.setState({ [event.target.name]: event.target.value });
 
-
     render() {
         return (
             <form onSubmit={this.onSubmit} style={{display: 'flex'}}>
@@ -20,7 +19,7 @@ class AddTodo extends Component {
                     type='text'
                     name='title'
                     style={{ flex: '10', padding: '5px' }}
-                    placeholder='Add Todo...'
+                    placeholder='Who do you want to kill today??'
                     value={this.state.title}
                     onChange={this.onChange}
                 />

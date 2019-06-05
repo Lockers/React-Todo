@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import TodoList from './TodoList'
-import PropTypes from 'prop-types'
 
 class Todos extends Component {
 
@@ -11,8 +10,4 @@ class Todos extends Component {
     }
 }
 
-//PropTypes
-Todos.propTypes = {
-    todos: PropTypes.array.isRequired
-}
 export default Todos;

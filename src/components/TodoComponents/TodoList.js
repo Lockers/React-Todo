@@ -1,34 +1,18 @@
-import React, { Component } from 'react'
-// import { NONAME } from 'dns';
-// import PropTypes from 'prop-types'
+import React from 'react'
 
-export class TodoList extends Component {
-    getStyle = () => {
-        return {
-            backgroundColor: 'lightgrey',
-            padding: '10px',
-            borderBottom: '1px #ccc dotted',
-            textDecoration: this.props.todo.completed ?
-                'line-through' : 'none'
-     }
-    }
-
-    render() {
-        const { id, title } = this.props.todo;
+const TodoList = props => {
+  
+    const { id, title } = this.props.todo;
         return (
             <div style={this.getStyle()}>
                 <p>
-                <input type='checkbox' onChange={this.props.markComplete.bind(this, id)} />
+                <input type='checkbox' onChange={props.markComplete(this, id)} />
                     {title}
-                    <button onClick={this.props.delTodo.bind(this, id)} style={btnStyle}>X</button></p>
+                    <button onClick={props.delTodo(this, id)} style={btnStyle}>X</button></p>
             </div>
         )
     }
-}
-//PropTypes
-// TodoList.propTypes = {
-//     todos: PropTypes.object.isRequired
-// }
+
 
 const btnStyle = {
     background: 'red',
