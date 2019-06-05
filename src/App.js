@@ -1,102 +1,134 @@
 import React, {Component} from 'react';
-
-const todoTest = [
-  {
-    task: 'Organize Garage',
-    id: 1528817077286,
-    completed: true
-  },
-  {
-    task: 'Bake Cookies',
-    id: 1528817084358,
-    completed: true
-  }
-];
+import Todos from './components/TodoComponents/Todos';
+import Header from './components/TodoComponents/Header';
+import AddTodo from './components/TodoComponents/AddTodo';
+import './components/TodoComponents/Todo.css';
 
 
 class App extends Component {
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+  state = {
+    todos: [
+      {
+        id: 1,
+        title: 'Add Search Function',
+        completed: false
+      },
+      {
+        id: 2,
+        title: 'Upload to Netlify',
+        completed: false
+      },
+      {
+        id: 3,
+        title: 'Persist Data',
+        completed: false
+      },
+      {
+        id: 4,
+        title: 'Kill Bill',
+        completed: false
+      },
 
-  constructor(prop) {
-    super(prop)
-    this.state = {
-      todoList: todoTest,
-      todoName: '',
-    };
+    ]
   }
-  changeHandler = (event) => {
+
+  
+
+  componentDidMount() {
+    this.hydrateStateWithLocalStorage();
+
+    // add event listener to save state to localStorage
+    // when user leaves/refreshes the page
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    // saves if component has a chance to unmount
+    this.saveStateToLocalStorage();
+  }
+
+  hydrateStateWithLocalStorage() {
+    // for all items in state
+    for (let key in this.state) {
+      // if the key exists in localStorage
+      if (localStorage.hasOwnProperty(key)) {
+        // get the key's value from localStorage
+        let value = localStorage.getItem(key);
+
+        // parse the localStorage string and setState
+        try {
+          value = JSON.parse(value);
+          this.setState({ [key]: value });
+        } catch (e) {
+          // handle empty string
+          this.setState({ [key]: value });
+        }
+      }
+    }
+  }
+  saveStateToLocalStorage() {
+    // for every item in React state
+    for (let key in this.state) {
+      // save to localStorage
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
+  }
+
+  //Check complete and put line through from CSS
+  markComplete = (id) => {
     this.setState({
-      todoName: event.target.value,
-    });
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+        todo.completed = !todo.completed
+        }
+        return todo
+    })})
   }
-
-  addTodo = () => {
+// Add a todo!
+  addTodo = (title) => {
     const newTodo = {
       id: Date.now(),
-      task: this.state.todoName,
-      completed: true,
-    };
+      title,
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo] });
+}
 
-    const newTodoList = this.state.todoList.concat(newTodo);
-
-    this.setState({
-      todoList: newTodoList,
-      todoName: '',
-    });
+// Check if deleting correct todo by Id
+  delTodo = (id) => {
+    this.setState({todos: [...this.state.todos.filter(todo => todo.id !== id)]})
+  }
+  // Clear all completed todos at once
+  clearComplete = () => {
+    this.setState({todos: [...this.state.todos.filter(todo => todo.completed !== true)]})
+  }
+  search = event => {
+    console.log(event.target.value)
+    this.setState({ todo: [...this.state.todos.filter(todo => event.target.value !== todo.title )]})
   }
 
-  removeComplete = completed => {
-      const completedTasks = this.state.todoList.filter(fr =>  this.state.completed === true);
-      this.setState({
-        todoList: completedTasks,
-      });
-  }
-  render() {
+ render() {
     return (
-      <div>
-        <h3>My Todo:</h3>
-        {
-          this.state.todoList.map(todo => (
-            <div key={todo.id}>
-              {todo.task}
-              <input type='checkbox' onClick='someFunction()' />
-            </div>
-          ))
-        }
-        <TodoAdder
-          todoName={this.state.todoName}
-          changeHandler={this.changeHandler}
-          addTodo={this.addTodo}
-        />
-        <RemoveAllComplete
-          todoName={this.state.todoName}
-          changeHandler={this.changeHandler}
-          removeComplete={this.removeComplete} />
-      </div>
+      <div className='App'>
+        <div className='container'>
+          <Header search={this.search} />
+          <Todos todos={this.state.todos} markComplete={this.markComplete} delTodo={this.delTodo} />
+          <AddTodo addTodo={this.addTodo} />
+          <div className='clearComplete'>
+            <button className='btn' onClick={this.clearComplete}>Clear Complete</button>
+          </div>
+        </div>
+       </div>
     );
   } 
 }
-function TodoAdder({ todoName, changeHandler, addTodo }) {
-  return (
-    <div>
-      <input
-        value={todoName}
-        onChange={changeHandler}
-        type="text"
-      />
-      <button onClick={addTodo}>Add Todo!!</button>
-    </div>
-  );
-}
-function RemoveAllComplete({ todoName, changeHandler, removeComplete }) {
-  return (
-    <div>
-      <button onClick={removeComplete}>Remove Complete</button>
-    </div>
-  );
-}
-
 
 export default App;
